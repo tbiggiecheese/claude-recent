@@ -1,8 +1,11 @@
 # claude-recent
 
+
+https://github.com/user-attachments/assets/70f16526-59e3-443b-9d4c-f2a5983e2f70
+
 Track every file Claude Code touches. Auto-open edited files in your editor and browse recent files via symlinks in your IDE's file tree.
 
-Works with any file editor — VS Code, Cursor, Android Studio, IntelliJ, Sublime, etc.
+Works with any file editor: VS Code, Cursor, Android Studio, IntelliJ, Sublime, etc.
 
 ## Setup
 
