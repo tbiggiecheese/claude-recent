@@ -7,6 +7,11 @@ Track every file Claude Code touches. Auto-open edited files in your editor and 
 
 Works with any file editor: VS Code, Cursor, Android Studio, IntelliJ, Sublime, etc.
 
+Most recently touched 100 files (`maxFiles`) will show up in the `/recents` project folder as symlinks so it's easier to pick up where the agent left off.
+
+<img width="296" height="268" alt="スクリーンショット 2026-03-07 20 17 58" src="https://github.com/user-attachments/assets/173fb5bc-76e5-4c30-b77e-faa133c8c56b" />
+
+
 ## Setup
 
 ### Requirements
