@@ -1,7 +1,7 @@
 {
   "maxFiles": 100,
   "autoOpen": true,
-  "editor": "code",
-  "editorArguments": "--reuse-window",
+  "editor": "Visual Studio Code",
+  "editorArguments": "",
   "trackReads": false
 }

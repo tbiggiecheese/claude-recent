@@ -83,8 +83,8 @@ if [[ -f "$GITIGNORE" ]]; then
   fi
 fi
 
-# Build symlink name: src/components/Button.tsx -> src__components__Button.tsx
-SYMLINK_NAME=$(echo "$REL_PATH" | sed 's|/|__|g')
+# Build symlink name: src/components/Button.tsx -> Button.tsx__components__src
+SYMLINK_NAME=$(echo "$REL_PATH" | tr '/' '\n' | tail -r | paste -sd '__' -)
 
 # Compute relative target from claude-recent/ to the actual file
 SYMLINK_TARGET="../$REL_PATH"
@@ -110,8 +110,8 @@ fi
 
 # --- Auto-open in editor ---
 if [[ "$AUTO_OPEN" == "true" ]]; then
-  # Run editor in background, don't let it block the hook
-  $EDITOR_CMD $EDITOR_ARGS "$FILE_PATH" &>/dev/null &
+  # Open in background (-g) without stealing focus
+  open -g -a "$EDITOR_CMD" "$FILE_PATH" &>/dev/null &
 fi
 
 exit 0
