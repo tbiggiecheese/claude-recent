@@ -1,0 +1,7 @@
+{
+  "maxFiles": 100,
+  "autoOpen": true,
+  "editor": "code",
+  "editorArguments": "--reuse-window",
+  "trackReads": false
+}
