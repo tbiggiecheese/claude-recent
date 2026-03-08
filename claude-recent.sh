@@ -84,7 +84,7 @@ if [[ -f "$GITIGNORE" ]]; then
 fi
 
 # Build symlink name: src/components/Button.tsx -> Button.tsx__components__src
-SYMLINK_NAME=$(echo "$REL_PATH" | tr '/' '\n' | tail -r | paste -sd '__' -)
+SYMLINK_NAME=$(echo "$REL_PATH" | tr '/' '\n' | tail -r | awk '{printf "%s%s", sep, $0; sep="__"}')
 
 # Compute relative target from claude-recent/ to the actual file
 SYMLINK_TARGET="../$REL_PATH"
