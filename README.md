@@ -32,7 +32,7 @@ Edit `config.json` in the claude-recent directory:
 
 ```json
 {
-  ## Max symlinks to keep in claude-recent/
+  ## Max symlinks to keep in recents/
   "maxFiles": 100,
   ## Open edited files in your editor automatically
   "autoOpen": true,
@@ -51,8 +51,8 @@ Edit `config.json` in the claude-recent directory:
 ./uninstall.sh
 ```
 
-This removes the hook from `~/.claude/settings.json` and offers to clean up `claude-recent/` folders from your projects.
+This removes the hook from `~/.claude/settings.json` and offers to clean up `recents/` folders from your projects.
 
 ## Gitignore
 
-The hook automatically adds `claude-recent/` to your project's `.gitignore` on first run. If you don't have a `.gitignore`, add one or create it manually.
+The hook automatically adds `recents/` to your project's `.gitignore` on first run. If you don't have a `.gitignore`, add one or create it manually.

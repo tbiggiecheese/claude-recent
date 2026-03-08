@@ -22,9 +22,9 @@ else
   echo "No settings file found at $SETTINGS_FILE"
 fi
 
-# Remove claude-recent/ symlink folders from all projects
-echo "Searching for claude-recent/ folders..."
-FOUND=$(find "$HOME" -name "claude-recent" -type d -not -path "*/node_modules/*" -not -path "*/.git/*" 2>/dev/null | grep -v "$(cd "$(dirname "$0")" && pwd)" || true)
+# Remove recents/ symlink folders from all projects
+echo "Searching for recents/ folders..."
+FOUND=$(find "$HOME" -name "recents" -type d -not -path "*/node_modules/*" -not -path "*/.git/*" 2>/dev/null | grep -v "$(cd "$(dirname "$0")" && pwd)" || true)
 
 if [[ -n "$FOUND" ]]; then
   echo "Found:"
@@ -36,7 +36,7 @@ if [[ -n "$FOUND" ]]; then
     echo "Removed."
   fi
 else
-  echo "No claude-recent/ folders found."
+  echo "No recents/ folders found."
 fi
 
 echo "Done!"

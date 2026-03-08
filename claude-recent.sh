@@ -72,21 +72,21 @@ if [[ $(wc -l < "$LOG_FILE") -gt 1000 ]]; then
 fi
 
 # --- Manage symlink folder ---
-RECENT_DIR="$PROJECT_DIR/claude-recent"
+RECENT_DIR="$PROJECT_DIR/recents"
 mkdir -p "$RECENT_DIR"
 
 # Add to .gitignore if not already there
 GITIGNORE="$PROJECT_DIR/.gitignore"
 if [[ -f "$GITIGNORE" ]]; then
-  if ! grep -q '^claude-recent' "$GITIGNORE" 2>/dev/null; then
-    echo 'claude-recent/' >> "$GITIGNORE"
+  if ! grep -q '^recents' "$GITIGNORE" 2>/dev/null; then
+    echo 'recents/' >> "$GITIGNORE"
   fi
 fi
 
 # Build symlink name: src/components/Button.tsx -> Button.tsx__components__src
 SYMLINK_NAME=$(echo "$REL_PATH" | tr '/' '\n' | tail -r | awk '{printf "%s%s", sep, $0; sep="__"}')
 
-# Compute relative target from claude-recent/ to the actual file
+# Compute relative target from recents/ to the actual file
 SYMLINK_TARGET="../$REL_PATH"
 
 # Remove existing symlink for this file (if re-edited, we want to refresh its timestamp)
