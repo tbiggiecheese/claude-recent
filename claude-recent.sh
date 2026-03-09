@@ -56,9 +56,11 @@ fi
 
 # Compute relative path from project dir
 REL_PATH="${FILE_PATH#"$PROJECT_DIR"/}"
+IS_EXTERNAL=false
 
-# If the file is outside the project dir, use absolute path encoding
+# If the file is outside the project dir, flag it
 if [[ "$REL_PATH" == "$FILE_PATH" ]]; then
+  IS_EXTERNAL=true
   REL_PATH="${FILE_PATH#/}"
 fi
 
@@ -83,11 +85,35 @@ if [[ -f "$GITIGNORE" ]]; then
   fi
 fi
 
-# Build symlink name: src/components/Button.tsx -> Button.tsx__components__src
-SYMLINK_NAME=$(echo "$REL_PATH" | tr '/' '\n' | tail -r | awk '{printf "%s%s", sep, $0; sep="__"}')
-
-# Compute relative target from recents/ to the actual file
-SYMLINK_TARGET="../$REL_PATH"
+if [[ "$IS_EXTERNAL" == "true" ]]; then
+  # For external files, use absolute symlink target and short name with repo context
+  SYMLINK_TARGET="$FILE_PATH"
+  FILENAME=$(basename "$FILE_PATH")
+  # Find the nearest git repo name for context, or use parent dir
+  REPO_NAME=""
+  CHECK_DIR=$(dirname "$FILE_PATH")
+  while [[ "$CHECK_DIR" != "/" ]]; do
+    if [[ -d "$CHECK_DIR/.git" ]]; then
+      REPO_NAME=$(basename "$CHECK_DIR")
+      break
+    fi
+    CHECK_DIR=$(dirname "$CHECK_DIR")
+  done
+  if [[ -n "$REPO_NAME" ]]; then
+    # Get path relative to repo root for a short but unique name
+    REPO_ROOT="$CHECK_DIR"
+    REPO_REL="${FILE_PATH#"$REPO_ROOT"/}"
+    SYMLINK_NAME=$(echo "$REPO_REL" | tr '/' '\n' | tail -r | awk '{printf "%s%s", sep, $0; sep="__"}')
+    SYMLINK_NAME="${SYMLINK_NAME}@@${REPO_NAME}"
+  else
+    # No git repo found — use last 3 path components
+    SYMLINK_NAME=$(echo "$REL_PATH" | tr '/' '\n' | tail -3 | tail -r | awk '{printf "%s%s", sep, $0; sep="__"}')
+  fi
+else
+  # In-project file: relative symlink and reversed relative path name
+  SYMLINK_TARGET="../$REL_PATH"
+  SYMLINK_NAME=$(echo "$REL_PATH" | tr '/' '\n' | tail -r | awk '{printf "%s%s", sep, $0; sep="__"}')
+fi
 
 # Remove existing symlink for this file (if re-edited, we want to refresh its timestamp)
 if [[ -L "$RECENT_DIR/$SYMLINK_NAME" ]]; then
